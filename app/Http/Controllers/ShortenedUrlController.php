@@ -89,7 +89,22 @@ class ShortenedUrlController extends Controller
      */
     public function show($id)
     {
-        //
+        try {
+            $redirectLink = ShortenedUrl::where('shortened_url', $id)->first();
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Get redirect link.',
+                'data' => [
+                    'redirect_link' => $redirectLink->url
+                ]
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => $e->getMessage()
+            ]);
+        }
     }
 
     /**
