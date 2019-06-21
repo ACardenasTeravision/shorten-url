@@ -17,7 +17,24 @@ class ShortenedUrlController extends Controller
      */
     public function index()
     {
-        //
+        try {
+            $shortened_links = ShortenedUrl::orderBy('times_visited', 'desc')
+                               ->take(100)
+                               ->get(['url', 'code', 'shortened_url', 'title', 'times_visited']);
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Top 100 most visited urls.',
+                'data' => [
+                    'urls' => $shortened_links
+                ]
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => $e->getMessage()
+            ]);
+        }
     }
 
     /**

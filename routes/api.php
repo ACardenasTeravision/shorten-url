@@ -13,4 +13,5 @@ use Illuminate\Http\Request;
 |
 */
 
+Route::get('get-top-urls', 'ShortenedUrlController@index');
 Route::post('create-shorten-url/{url}', 'ShortenedUrlController@store')->where('url', '(.*)');
